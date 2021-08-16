@@ -390,6 +390,8 @@ func SetChild(node Node, i int, child Node) {
 		n.Expr = child.(Expr)
 	case *MatrixSelector:
 	case *NumberLiteral, *StringLiteral, *VectorSelector:
+	default:
+		panic(errors.Errorf("promql.Children: unhandled node type %T", node))
 	}
 }
 
