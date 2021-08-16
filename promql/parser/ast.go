@@ -313,7 +313,7 @@ func Walk(ctx context.Context, v Visitor, s *EvalStmt, node Node, path []Node, n
 		wg.Add(1)
 		go func(i int, e Node) {
 			defer wg.Done()
-			if childNode, childErr := Walk(ctx, v, s, e, path, nr); err != nil {
+			if childNode, childErr := Walk(ctx, v, s, e, append([]Node{}, path...), nr); err != nil {
 				errs[i] = childErr
 			} else {
 				SetChild(node, i, childNode)
