@@ -598,7 +598,10 @@ func (ng *Engine) subqueryOffsetRange(path []parser.Node) (time.Duration, time.D
 
 func (ng *Engine) findMinTime(s *parser.EvalStmt) time.Time {
 	var maxOffset time.Duration
+	l := sync.Mutex{}
 	parser.Inspect(context.TODO(), s, func(node parser.Node, path []parser.Node) error {
+	    l.Lock()
+	    defer l.Unlock()
 		subqOffset, subqRange := ng.subqueryOffsetRange(path)
 		switch n := node.(type) {
 		case *parser.VectorSelector:
